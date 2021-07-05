@@ -40,7 +40,12 @@ class App extends Component {
   }
 
 
-
+  //Méthode permettant de modifer une recette
+  updateRecette = (key, newRecette) => {
+    const recettes = { ...this.state.recettes }
+    recettes[key] = newRecette
+    this.setState({ recettes })
+  }
 
 
   chargerRecette = () => this.setState({ recettes})
@@ -60,7 +65,9 @@ class App extends Component {
           </div>
         </div>
         <Admin
-          addRecette={this.addRecette} 
+          recettes={this.state.recettes}
+          addRecette={this.addRecette}
+          updateRecette={this.updateRecette} 
           chargerRecette={this.chargerRecette} />
       </div>
     )
