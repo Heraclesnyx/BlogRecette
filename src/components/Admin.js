@@ -14,7 +14,15 @@ class Admin extends Component {
         chef: null
     }
 
-
+    //Garder la connexion ouverte quand on refresh la page
+    componentDidMount(){
+        //Changement dans la connexion
+        firebase.auth().onAuthStateChanged(user => {
+            if(user){
+                this.handleAuth({ user })
+            }
+        })
+    }
 
     handleAuth = async authData => {
         const box = await base.fetch(this.props.pseudo, { context: this}) //Cherche data
