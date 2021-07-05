@@ -22,6 +22,11 @@ class AddRecette extends Component {
 
         const recette = { ...this.state }
         this.props.addRecette(recette)
+
+        //Reset
+        Object.keys(recette).forEach(item => {
+        recette[item] = ''}) //Remise à zero
+        this.setState(({ ...recette }))
     }
 
 
