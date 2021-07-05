@@ -1,25 +1,70 @@
-import logo from './logo.svg';
+import React, { Component } from 'react'
+// CSS
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Header from './components/Header';
+import Admin from './components/Admin';
+import Card from './components/Card';
+import recettes from './recettes';
+
+
+//Firebase
+import base from './base';
+
+
+class App extends Component {
+  state = {
+    pseudo: this.props.match.params.pseudo,
+    recettes: {}
+  }
+
+  //Synchronisation ac firebase
+  componentDidMount () {
+    this.ref = base.syncState(`/${this.state.pseudo}/recettes`, {
+      context: this,
+      state: 'recettes'
+    })
+  }
+
+  //Désynchronisation de firebase lorsque le component se ferme
+  componentWillUnmount () {
+    base.removeBinding(this.ref)
+  }
+
+
+  //Méthode permettant d'ajouter une recette
+  addRecette = recette => {
+    const recettes = { ...this.state.recettes }
+    recettes[`recette-${Date.now()}`] = recette
+    this.setState({ recettes })
+  }
+
+
+
+
+
+  chargerRecette = () => this.setState({ recettes})
+
+  render () {
+    const cards = Object.keys(this.state.recettes)
+            .map(key => <Card key={key} details={this.state.recettes[key]} />
+              )
+
+
+    return (
+      <div className='box'>
+        <Header pseudo={this.state.pseudo} />
+        <div className='cards'>
+          <div className='card'>
+            { cards }
+          </div>
+        </div>
+        <Admin
+          addRecette={this.addRecette} 
+          chargerRecette={this.chargerRecette} />
+      </div>
+    )
+  }
 }
 
-export default App;
+export default App
