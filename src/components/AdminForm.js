@@ -3,7 +3,8 @@ import React from 'react'
 const AdminForm = ({
     id: key, //Changement de nom pour id
     updateRecette,
-    recettes
+    recettes,
+    deleteRecette
 }) => {
     const recette = recettes[key] //Permet de cibler l'élement à mettre à jour
 
@@ -27,7 +28,7 @@ const AdminForm = ({
                 <textarea value={recette.instructions} onChange={e => handleChange(e, key)} name="instructions" rows="15" placeholder="Liste des instructions" />
 
             </form>
-            <button>Delete</button>
+            <button onClick={() => deleteRecette(key)}>Delete</button>
         </div>
     )
 }
