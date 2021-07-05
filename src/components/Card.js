@@ -5,7 +5,7 @@ const Card = ({ details }) => {
     const ingredients = details.ingredients
         .split(',')
         .map(item => <li key={item}>{item}</li>)
-
+    
     const instructions = details.instructions
         .split('\n')
         .map(item => <li key={item}>{item}</li>)

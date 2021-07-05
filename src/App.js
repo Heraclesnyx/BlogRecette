@@ -67,11 +67,10 @@ class App extends Component {
       <div className='box'>
         <Header pseudo={this.state.pseudo} />
         <div className='cards'>
-          <div className='card'>
-            { cards }
-          </div>
+          { cards }  
         </div>
         <Admin
+          pseudo = {this.state.pseudo}
           recettes={this.state.recettes}
           addRecette={this.addRecette}
           updateRecette={this.updateRecette}
